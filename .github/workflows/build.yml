@@ -874,17 +874,12 @@ jobs:
           Add-Content $env:GITHUB_ENV "VULKAN_SDK=C:\VulkanSDK\${env:VULKAN_SDK_VERSION}"
           Add-Content $env:GITHUB_PATH "C:\VulkanSDK\${env:VULKAN_SDK_VERSION}\bin"
 
-      - name: Install Ninja
-        id: install_ninja
-        run: |
-          choco install ninja
-
       - name: Build
         id: cmake_build
         shell: pwsh
         run: |
-          cmake -S . -B build -G "Ninja Multi-Config" `
-            -DCMAKE_TOOLCHAIN_FILE=cmake/x64-windows-llvm.cmake `
+          cmake -S . -B build `
+            -DCMAKE_BUILD_TYPE=Release `
             -DGGML_NATIVE=OFF `
             -DGGML_VULKAN=ON `
             -DLLAMA_BUILD_SERVER=ON `
